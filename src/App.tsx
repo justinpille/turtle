@@ -1,25 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { Canvas } from "./Canvas";
 
 function App() {
+  const [screenRectangle, setScreenRectangle] = useState<DOMRect>();
+
+  useEffect(() => {
+    setScreenRectangle(document.body.getBoundingClientRect());
+  }, []);
+
+  if (!screenRectangle) {
+    return null;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Canvas
+        height={screenRectangle.height}
+        width={screenRectangle.width}
+        draw={(ctx) => {
+          ctx.strokeStyle = "green";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(50, 100);
+          ctx.lineTo(500, 500);
+          ctx.stroke();
+        }}
+      />
+      <Canvas
+        height={screenRectangle.height}
+        width={screenRectangle.width}
+        draw={(ctx) => {
+          ctx.strokeStyle = "red";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(50, 50);
+          ctx.lineTo(500, 600);
+          ctx.stroke();
+        }}
+      />
+    </>
   );
 }
 
