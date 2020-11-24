@@ -1,43 +1,39 @@
-import React, { useEffect, useState } from "react";
-import { Canvas } from "./Canvas";
+import { useEffect, useState } from "react";
+import { tokenize } from "./tokenize";
+import { parse } from "./parse";
+import { evaluate } from "./evaluate";
+import { examples } from "./examples";
 
 function App() {
-  const [screenRectangle, setScreenRectangle] = useState<DOMRect>();
+  const [program, setProgram] = useState<string>();
+  const [tokens, setTokens] = useState<{}[]>();
+  const [ast, setAst] = useState<{}>();
 
   useEffect(() => {
-    setScreenRectangle(document.body.getBoundingClientRect());
-  }, []);
-
-  if (!screenRectangle) {
-    return null;
-  }
+    if (program === undefined) {
+      return;
+    }
+    const tokens = tokenize(program);
+    setTokens([...tokens]);
+    const ast = parse(tokens);
+    setAst(ast);
+    evaluate(ast);
+  }, [program]);
 
   return (
     <>
-      <Canvas
-        height={screenRectangle.height}
-        width={screenRectangle.width}
-        draw={(ctx) => {
-          ctx.strokeStyle = "green";
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(50, 100);
-          ctx.lineTo(500, 500);
-          ctx.stroke();
-        }}
-      />
-      <Canvas
-        height={screenRectangle.height}
-        width={screenRectangle.width}
-        draw={(ctx) => {
-          ctx.strokeStyle = "red";
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(50, 50);
-          ctx.lineTo(500, 600);
-          ctx.stroke();
-        }}
-      />
+      <h2>Examples</h2>
+      {examples.map((ex, i) => (
+        <button key={ex.name + i} onClick={() => setProgram(ex.program)}>
+          {ex.name}
+        </button>
+      ))}
+      <h2>Program</h2>
+      <pre>{program}</pre>
+      <h2>Tokens</h2>
+      <pre>{JSON.stringify(tokens, null, 2)}</pre>
+      <h2>AST</h2>
+      <pre>{JSON.stringify(ast, null, 2)}</pre>
     </>
   );
 }

@@ -9,12 +9,19 @@ body {
   width: 100vw;
 }
 
-code {
+pre {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+  font-size: 14px;
 }
 
 canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#root {
   position: absolute;
   top: 0;
   left: 0;
