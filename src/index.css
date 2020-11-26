@@ -26,3 +26,30 @@ canvas {
   top: 0;
   left: 0;
 }
+
+textarea {
+  resize: none;
+  overflow: auto;
+}
+
+#command-bar {
+  position: fixed;
+  border-radius: 10px;
+  bottom: 10px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: white;
+  color: #4d4e53;
+  z-index: 100;
+  border: 3px solid #4d4e53;
+  padding: 10px;
+  padding-left: 20px;
+  font-size: 32px;
+  font-family: monospace;
+}
+
+#command-bar:focus {
+  background-color: #4d4e53;
+  color: white;
+  outline: none;
+}

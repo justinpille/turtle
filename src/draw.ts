@@ -99,6 +99,11 @@ function pendown() {
   drawTurtle();
 }
 
-drawTurtle();
+export function clear() {
+  pathCtx.resetTransform();
+  pathCtx.moveTo(midX, midY);
+  turtleCtx.resetTransform();
+  drawTurtle();
+}
 
 export { forward, back, right, left, penup, pendown };

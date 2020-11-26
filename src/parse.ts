@@ -57,7 +57,7 @@ const isAssignmentCommand = (value: string | number): boolean => {
   return value === "set";
 };
 
-const isBlockCommand = (value: string | number): boolean => {
+export const isBlockCommand = (value: string | number): boolean => {
   return value === "repeat" || value === "define";
 };
 
