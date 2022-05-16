@@ -6,6 +6,8 @@ import { examples } from "./examples";
 import { clear } from "./draw";
 import { pack } from "./pack";
 
+const debugMode = false;
+
 function App() {
   const [program, setProgram] = useState<string>();
   const [tokens, setTokens] = useState<{}[]>();
@@ -77,18 +79,22 @@ function App() {
 
   return (
     <>
-      <h2>Examples</h2>
-      {examples.map((ex, i) => (
-        <button key={ex.name + i} onClick={() => setProgram(ex.program)}>
-          {ex.name}
-        </button>
-      ))}
-      <h2>Program</h2>
-      <pre>{program}</pre>
-      <h2>Tokens</h2>
-      <pre>{JSON.stringify(tokens, null, 2)}</pre>
-      <h2>AST</h2>
-      <pre>{JSON.stringify(ast, null, 2)}</pre>
+      {debugMode && (
+        <>
+          <h2>Examples</h2>
+          {examples.map((ex, i) => (
+            <button key={ex.name + i} onClick={() => setProgram(ex.program)}>
+              {ex.name}
+            </button>
+          ))}
+          <h2>Program</h2>
+          <pre>{program}</pre>
+          <h2>Tokens</h2>
+          <pre>{JSON.stringify(tokens, null, 2)}</pre>
+          <h2>AST</h2>
+          <pre>{JSON.stringify(ast, null, 2)}</pre>
+        </>
+      )}
       <textarea
         onKeyDown={inputMode === "block" ? blockHandler : commandHandler}
         wrap="off"
